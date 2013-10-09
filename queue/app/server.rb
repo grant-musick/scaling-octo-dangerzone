@@ -4,16 +4,14 @@ require 'socket'
 
 class Server
   
-  attr_accessor :address, :port
+  attr_accessor :tcpserver
 
-  def initialize(address,port)
-    @address = address
-    @port = port
-    @server = TCPServer.new('localhost', 2345)
+  def initialize(tcp)
+    @tcpserver = tcp
   end
 
   def close()
-    @server.close
+    @tcpserver.close
   end
 
 
@@ -33,7 +31,7 @@ class Server
       # Wait until a client connects, then return a TCPSocket
       # that can be used in a similar fashion to other Ruby
       # I/O objects. (In fact, TCPSocket is a subclass of IO.)
-      socket = server.accept
+      socket = tcpserver.accept
 
       # Read the first line of the request (the Request-Line)
       request = socket.gets
